@@ -1,0 +1,16 @@
+{
+    "development":{
+        "username":"root",
+        "password":"",
+        "database":"ssdovti",
+        "host":"localhost",
+        "dialect":"mysql"
+    },
+    "production":{
+        "username":"b4a5fb024c300f",
+        "password":"33052fc7",
+        "database":"heroku_051c86acb2f77ae",
+        "host":"us-cdbr-east-02.cleardb.com",
+        "dialect":"mysql"
+    }
+}
