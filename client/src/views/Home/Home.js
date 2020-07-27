@@ -1,4 +1,4 @@
-import React,{ useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types'
 import { Hero, Courses, Vision, AboutUs, Start } from './components';
 
@@ -10,11 +10,9 @@ const Home = props => {
 
     const { user, logOut } = props
 
-    useEffect(() => {
-        if(user===undefined){
-            logOut()
-        }
-    }, [user,logOut]);
+    if(user===undefined){
+        logOut()
+    }
 
     console.log(user)
 
