@@ -10,7 +10,7 @@ const Home = props => {
 
     const { user, logOut } = props
 
-    if(user===undefined){
+    if(user === undefined){
         logOut()
         console.log(user)
     }
