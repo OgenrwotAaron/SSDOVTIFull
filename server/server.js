@@ -33,7 +33,7 @@ app.get('*',(req,res)=>{
 	res.sendFile(path.resolve(__dirname,'..','client','build','index.html'))
 })
 
-const PORT = 5500 || process.env.PORT
+const PORT = process.env.PORT || 5500
 
 app.listen(PORT,()=>{
 	console.log(`Server listening on port ${PORT}`)
