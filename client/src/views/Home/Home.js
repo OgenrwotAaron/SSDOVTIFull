@@ -12,9 +12,8 @@ const Home = props => {
 
     if(user===undefined){
         logOut()
+        console.log(user)
     }
-
-    console.log(user)
 
     return ( 
         <div>
