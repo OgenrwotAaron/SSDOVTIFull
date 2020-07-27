@@ -16,6 +16,8 @@ const Home = props => {
         }
     }, [user,logOut]);
 
+    console.log(user)
+
     return ( 
         <div>
             <Hero user={user}/>
