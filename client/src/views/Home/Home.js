@@ -12,6 +12,7 @@ const Home = props => {
 
     if(user === undefined){
         logOut()
+        console.log(user)
     }
 
     return ( 
