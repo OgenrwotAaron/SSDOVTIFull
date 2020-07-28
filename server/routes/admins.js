@@ -36,7 +36,8 @@ router.post('/register',(req,res)=>{
 
     Users.create({
         user_name:phone,
-        password:phone
+        password:phone,
+        role:1
     })
     .then(user=>{
         Admins.create({
@@ -50,6 +51,7 @@ router.post('/register',(req,res)=>{
             res.json(admin)
         })
         .catch(e=>{
+            console.log(e)
             res.status(500).json({error:true,message:e.parent.sqlMessage})
         })
     })
@@ -69,6 +71,7 @@ router.post('/register',(req,res)=>{
                 res.status(400).json({error:true,message:e.parent.sqlMessage})
             })
         }else{
+            console.log(e)
             res.status(500).json({error:true,message:e.parent.sqlMessage})
         }
     })

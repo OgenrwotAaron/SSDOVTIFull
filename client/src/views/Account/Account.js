@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import { Grid } from '@material-ui/core';
 
 import { AccountProfile, AccountDetails } from './components';
+import { saveUser } from '../../actions'
+import { bindActionCreators } from 'redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,7 +44,7 @@ const Account = props => {
           xl={4}
           xs={12}
         >
-          <AccountProfile setUser={setUser} user={user}/>
+          <AccountProfile saveUser={props.saveUser} setUser={setUser} user={user}/>
         </Grid>
         <Grid
           item
@@ -51,7 +53,7 @@ const Account = props => {
           xl={8}
           xs={12}
         >
-          <AccountDetails setUser={setUser} user={user}/>
+          <AccountDetails saveUser={props.saveUser} setUser={setUser} user={user}/>
         </Grid>
       </Grid>
     </div>
@@ -68,4 +70,8 @@ const mapStateToProps = state =>{
   }
 }
 
-export default connect(mapStateToProps)(Account);
+const mapDispatchToProps = dispatch =>{
+  return bindActionCreators({saveUser},dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Account);

@@ -173,7 +173,7 @@ router.post('/login',(req,res)=>{
         ]
     })
     .then(user=>{
-        if(user.role!==undefined){
+        if(user){
             switch (user.role) {
                 case 0:
                     res.json({user_name:user.user_name,password:user.password,role:user.role,...user.admin.dataValues})

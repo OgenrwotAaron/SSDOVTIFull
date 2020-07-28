@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 
 import { ProfileSummary, ProfileDetails } from './components';
+import { reloadUser } from '../../actions'
+import { bindActionCreators } from 'redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 const Profile = props => {
 
-  const { user,history } = props
+  const { user,history, reloadUser } = props
 
   const classes = useStyles();
 
@@ -56,7 +58,7 @@ const Profile = props => {
                     xl={8}
                     xs={12}
                 >
-                    <ProfileDetails reload={reload} setReload={setReload} user={user} />
+                    <ProfileDetails reloadUser={reloadUser} reload={reload} setReload={setReload} user={user} />
                 </Grid>
             </Grid>
         </div> 
@@ -74,4 +76,8 @@ const mapStateToProps = state =>{
   }
 }
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = dispatch =>{
+  return bindActionCreators({reloadUser},dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Profile);

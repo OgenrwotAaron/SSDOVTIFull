@@ -10,6 +10,11 @@ export default function(state={},action){
                 ...state,
                 user:{},
             }
+        case 'RELOAD_USER':
+            return {
+                ...state,
+                user:action.payload,
+            }
         default:
             return state
     }

@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const AccountDetails = props => {
-  const { className, user,setUser, ...rest } = props;
+  const { className, saveUser, user,setUser, ...rest } = props;
 
   const classes = useStyles();
 
@@ -45,27 +45,13 @@ const AccountDetails = props => {
     });
   };
 
-  const positions = [
-    {
-      value: 'registra',
-      label: 'Registra'
-    },
-    {
-      value: 'hod',
-      label: 'Head of Department'
-    },
-    {
-      value: 'principal',
-      label: 'Principal'
-    }
-  ];
-
   const handleSaveDetails = event =>{
     //if phone=admin, axios.post('/api/v1/admins/add',{...values})
     //once login is working
     setLoading(true)
     axios.post('/api/v1/admins/edit',{...values})
     .then(res=>{
+      saveUser(res.data)
       setUser(res.data)
       setLoading(false)
       setResults({
@@ -182,21 +168,9 @@ const AccountDetails = props => {
                 name="position"
                 onChange={handleChange}
                 required
-                select
-                // eslint-disable-next-line react/jsx-sort-props
-                SelectProps={{ native: true }}
                 value={values.position}
                 variant="outlined"
-              >
-                {positions.map(option => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
+              />
             </Grid>
             <Grid
               item

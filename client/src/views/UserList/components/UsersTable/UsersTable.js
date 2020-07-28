@@ -290,6 +290,7 @@ const UsersTable = props => {
                       {title:'First Name',field:'fname'},
                       {title:'Last Name',field:'lname'},
                       {title:'Email',field:'email'},
+                      {title:'Phone',field:'phone'},
                       {
                         title:'Position',
                         field:'position'

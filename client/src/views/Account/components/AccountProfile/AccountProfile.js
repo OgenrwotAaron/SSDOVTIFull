@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AccountProfile = props => {
-  const { className, user, setUser, ...rest } = props;
+  const { className, user, saveUser, setUser, ...rest } = props;
 
   const classes = useStyles();
 
@@ -49,11 +49,14 @@ const AccountProfile = props => {
     },(err,result)=>{
         if(result && result.event==='success'){
           axios.post('/api/v1/admins/edit',{...user,avatar:result.info.secure_url})
-          .then(res=> setUser(res.data) )
+          .then(res=> {
+            setUser(res.data)
+            saveUser(res.data)
+          } )
           .catch(e=>setUser(user))
         }
     }))
-  }, [user,setUser]);
+  }, [user,setUser,saveUser]);
 
   const handleUploadAvatar = event =>{
     event.preventDefault()
@@ -63,7 +66,10 @@ const AccountProfile = props => {
   const handleRemoveAvatar = event =>{
     event.preventDefault()
     axios.post('/api/v1/admins/edit',{...user,avatar:null})
-    .then(res=> setUser(res.data) )
+    .then(res=> {
+      setUser(res.data)
+      saveUser(res.data)
+    } )
     .catch(e=>setUser(user))
   }
 

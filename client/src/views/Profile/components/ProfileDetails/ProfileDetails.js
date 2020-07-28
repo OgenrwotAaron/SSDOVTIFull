@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ProfileDetails = props => {
-  const { className, user, reload, setReload, ...rest } = props;
+  const { className, user, reload, reloadUser, setReload, ...rest } = props;
 
   const classes = useStyles();
 
@@ -77,6 +77,7 @@ const ProfileDetails = props => {
       role:values.role
     })
     .then(res=>{
+      reloadUser(user.role,user.user_name)
       setResults({
         ...results,
         success:true
