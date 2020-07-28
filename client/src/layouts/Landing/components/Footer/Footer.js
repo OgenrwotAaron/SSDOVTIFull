@@ -8,9 +8,8 @@ import HomeIcon from '@material-ui/icons/Home';
 
 const useStyles = makeStyles(theme=>({
     root:{
-        backgroundColor:theme.palette.primary.dark,
         padding:theme.spacing(2,2),
-        textAlign:'center'
+        textAlign:'center',
     },
     pages:{
         display:'flex',
@@ -18,8 +17,9 @@ const useStyles = makeStyles(theme=>({
         textAlign:'left',
     },
     links:{
-        color:'#d4d4d4',
-        margin:theme.spacing(1,0)
+        color:'#546e7a',
+        margin:theme.spacing(1,0),
+        fontSize:18
     },
     divider:{
         backgroundColor:theme.palette.primary.main,
@@ -28,6 +28,15 @@ const useStyles = makeStyles(theme=>({
     },
     icons:{
         marginBottom:-6
+    },
+    date:{
+        backgroundColor:'white',
+        display:'flex',
+        justifyContent:'center',
+        padding:theme.spacing(1,1,3,1)
+    },
+    gridItem:{
+        padding:theme.spacing(2)
     }
 }))
 
@@ -36,10 +45,10 @@ const Footer = props => {
     const classes = useStyles()
 
     return ( 
-        <div className={classes.root}>
-            <Grid container spacing={2}>
-                <Grid item xs={6} sm={4}>
-                    <Typography variant='h5' style={{color:'#f1f1f1'}} >Pages</Typography>
+        <div style={{backgroundColor:'white'}}>
+            <Grid className={classes.root} container>
+                <Grid item className={classes.gridItem} xs={6} sm={4}>
+                    <Typography variant='h5' style={{color:'#e77924'}} >Pages</Typography>
                     <Divider className={classes.divider}/>
                     <div className={classes.pages}>
                         <Link to='/all-courses' ><Typography className={classes.links}>Courses</Typography></Link>
@@ -49,8 +58,8 @@ const Footer = props => {
                         <Link to='/enrollment' ><Typography className={classes.links}>Enrollment</Typography></Link>
                     </div>
                 </Grid>
-                <Grid item xs={6} sm={4} >
-                    <Typography variant='h5' style={{color:'#f1f1f1'}} >Contact</Typography>
+                <Grid item className={classes.gridItem} xs={6} sm={4} >
+                    <Typography variant='h5' style={{color:'#e77924'}} >Contact</Typography>
                     <Divider className={classes.divider}/>
                     <div className={classes.pages}>
                         <Typography className={classes.links}><PhoneIcon className={classes.icons}/> +211 (0) 928 979 222</Typography>
@@ -59,8 +68,8 @@ const Footer = props => {
                         <Typography className={classes.links}><EmailIcon className={classes.icons}/>  info@ssdoprg.org</Typography>
                     </div>
                 </Grid>
-                <Grid item xs={12} sm={4}>
-                    <Typography variant='h5' style={{color:'#f1f1f1'}} >Address</Typography>
+                <Grid item className={classes.gridItem} xs={12} sm={4}>
+                    <Typography variant='h5' style={{color:'#e77924'}} >Address</Typography>
                     <Divider className={classes.divider}/>
                     <div className={classes.pages}>
                         <Typography className={classes.links}><RoomIcon className={classes.icons}/>Hai Guava along Yei – Lasu Road</Typography>
@@ -68,7 +77,9 @@ const Footer = props => {
                     </div>
                 </Grid>
             </Grid>
-            <Typography color='primary'>SSDOVTI {new Date().getFullYear()} &copy;</Typography>
+            <div className={classes.date}>
+                <Typography variant='h5' color='textSecondary'>SSDOVTI {new Date().getFullYear()} &copy;</Typography>
+            </div>
         </div>
      );
 }
