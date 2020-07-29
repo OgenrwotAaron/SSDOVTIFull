@@ -1,4 +1,4 @@
-export default function(state={},action){
+export default function(state={user:{}},action){
     switch (action.type) {
         case 'SAVE_USER':
             return {
@@ -16,6 +16,6 @@ export default function(state={},action){
                 user:action.payload,
             }
         default:
-            return {...state,user:{}}
+            return state
     }
 }
