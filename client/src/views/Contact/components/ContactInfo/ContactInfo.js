@@ -44,7 +44,7 @@ const ContactInfo = props => {
                         </Avatar>
                         <CardContent>
                             <Typography align='center' variant='h5'>Phone</Typography>
-                            <Typography>+211 (0) 928 979 222</Typography>
+                            <Typography>+211 (0) 928 930 555</Typography>
                             <Typography>+211 (0) 928 948 555</Typography>
                         </CardContent>
                     </Card>
@@ -57,7 +57,7 @@ const ContactInfo = props => {
                         <CardContent>
                             <Typography align='center' variant='h5'>Email</Typography>
                             <Typography>ssdovocin@gmail.com</Typography>
-                            <Typography>info@ssdoprg.org</Typography>
+                            <Typography>info@ssdoprog.org</Typography>
                         </CardContent>
                     </Card>
                 </Grid>

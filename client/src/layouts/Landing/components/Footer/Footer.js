@@ -62,10 +62,10 @@ const Footer = props => {
                     <Typography variant='h5' style={{color:'#e77924'}} >Contact</Typography>
                     <Divider className={classes.divider}/>
                     <div className={classes.pages}>
-                        <Typography className={classes.links}><PhoneIcon className={classes.icons}/> +211 (0) 928 979 222</Typography>
+                        <Typography className={classes.links}><PhoneIcon className={classes.icons}/> +211 (0) 928 930 555</Typography>
                         <Typography className={classes.links}><PhoneIcon className={classes.icons}/>  +211 (0) 928 948 555</Typography>
                         <Typography className={classes.links}><EmailIcon className={classes.icons}/> ssdovocin@gmail.com</Typography>
-                        <Typography className={classes.links}><EmailIcon className={classes.icons}/>  info@ssdoprg.org</Typography>
+                        <Typography className={classes.links}><EmailIcon className={classes.icons}/>  info@ssdoprog.org</Typography>
                     </div>
                 </Grid>
                 <Grid item className={classes.gridItem} xs={12} sm={4}>

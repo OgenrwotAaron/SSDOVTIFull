@@ -27,7 +27,9 @@ import {
   EditCourse as EditCourseView,
   EditUnit as EditUnitView,
   AddVideo as AddVideoView,
-  EditVideo as EditVideoView
+  EditVideo as EditVideoView,
+  Messages as MessagesView,
+  ViewMail
 } from './views';
 
 const Routes = () => {
@@ -132,6 +134,18 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/users/:type"
+      />
+      <RouteWithLayout
+        component={MessagesView}
+        exact
+        layout={MainLayout}
+        path="/mail"
+      />
+      <RouteWithLayout
+        component={ViewMail}
+        exact
+        layout={MainLayout}
+        path="/view-mail/:id"
       />
       <RouteWithLayout
         component={ProductListView}

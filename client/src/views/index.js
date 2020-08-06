@@ -21,3 +21,5 @@ export { default as EditCourse } from './EditCourse';
 export { default as EditUnit } from './EditUnit';
 export { default as AddVideo } from './AddVideo';
 export { default as EditVideo } from './EditVideo';
+export { default as Messages } from './Messages';
+export { default as ViewMail } from './ViewMail';

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { TextField, makeStyles, Typography, Button } from '@material-ui/core';
+import { TextField, makeStyles, Typography, Button, Snackbar } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import axios from 'axios'
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles(theme=>({
     root:{
@@ -28,11 +30,15 @@ const ContactForm = props => {
     const classes = useStyles()
 
     const [ formData, setFormData ] = useState({
-        fullname:'',
+        sender:'',
         email:'',
         subject:'',
-        message:''
+        body:''
     })
+    const [results, setResults] = useState({
+        success:false,
+        error:false
+    });
 
     const handleChange = event =>{
         event.preventDefault()
@@ -42,18 +48,43 @@ const ContactForm = props => {
         })
     }
 
-    const handleSend = () =>{
-        console.log(formData)
+    const handleSend = event =>{
+        event.preventDefault()
+        axios.post('/api/v1/mail/add',{...formData})
+        .then(res=>{
+            setResults({
+                ...results,
+                success:true
+            })
+            setFormData({
+                sender:'',
+                email:'',
+                subject:'',
+                body:''
+            })
+        })
+        .catch(e=>{
+            setResults({
+                ...results,
+                error:true
+            })
+        })
+    }
+
+    const handleClose = () =>{
+        setResults({
+            ...!results
+        })
     }
 
     return ( 
         <div className={classes.root}>
             <Typography variant='h4' >Message Us</Typography>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={handleSend}>
                 <TextField
                     onChange={handleChange}
-                    name='fullname'
-                    value={formData.fullname}
+                    name='sender'
+                    value={formData.sender}
                     type='text'
                     variant='outlined'
                     label='Fullname'
@@ -79,17 +110,27 @@ const ContactForm = props => {
                 />
                  <TextField
                     onChange={handleChange}
-                    name='message'
+                    name='body'
                     type='text'
                     variant='outlined'
                     label='Message'
-                    value={formData.message}
+                    value={formData.body}
                     multiline
                     rows={4}
                     className={classes.input}
                 />
-                <Button onClick={handleSend} style={{width:'100%'}} endIcon={<SendIcon/>} color='primary' variant='contained'>Send</Button>
+                <Button type='submit' style={{width:'100%'}} endIcon={<SendIcon/>} color='primary' variant='contained'>Send</Button>
             </form>
+            <Snackbar open={results.success} autoHideDuration={3000} onClose={handleClose}>
+                <Alert severity='success' variant='filled' onClose={handleClose}>
+                    Message Sent Successfully!
+                </Alert>
+            </Snackbar>
+            <Snackbar open={results.error} autoHideDuration={3000} onClose={handleClose}>
+                <Alert severity='error' variant='filled' onClose={handleClose}>
+                    Message Not Sent, Try again
+                </Alert>
+            </Snackbar>
         </div>
      );
 }

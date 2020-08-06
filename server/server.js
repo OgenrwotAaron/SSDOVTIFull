@@ -28,7 +28,8 @@ app.use('/api/v1/videos',require('./routes/videos'));
 app.use('/api/v1/files',require('./routes/files'));
 app.use('/api/v1/admins', require('./routes/admins'))
 app.use('/api/v1/users',require('./routes/users'));
-app.use('/api/v1/hods',require('./routes/hods'))
+app.use('/api/v1/hods',require('./routes/hods'));
+app.use('/api/v1/mail',require('./routes/mail'))
 
 app.get('*',(req,res)=>{
 	res.sendFile(path.resolve(__dirname,'..','client','build','index.html'))

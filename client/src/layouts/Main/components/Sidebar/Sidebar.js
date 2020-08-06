@@ -11,6 +11,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import SecurityIcon from '@material-ui/icons/Security';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
+import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 
 import { Profile, SidebarNav } from './components';
 
@@ -76,6 +77,11 @@ const Sidebar = props => {
         title: 'Admins',
         href: '/users/admins',
         icon: <SecurityIcon />
+      },
+      {
+        title: 'Messages',
+        href: '/mail',
+        icon: <MessageOutlinedIcon />
       },
       {
         title: 'H.O.Ds',
