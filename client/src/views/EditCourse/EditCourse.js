@@ -49,7 +49,7 @@ const EditCourse = props => {
     useEffect(() => {
         axios.get(`/api/v1/courses/single?code=${params.id}`)
         .then(res=>{
-            setData(res.data)
+            setData(res.data.course)
         })
     }, [params.id,reload]);
 
