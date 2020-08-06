@@ -3,6 +3,7 @@ const db = require('../config/database')
 const Students  = require('./Students')
 const Teachers = require('./Teachers')
 const Admin = require('./Admins')
+const HOD = require('./HODS')
 
 const User = db.define('users',{
         user_name:{
@@ -27,5 +28,6 @@ const User = db.define('users',{
 User.hasOne(Students,{ foreignKey:'reg_number'})
 User.hasOne(Teachers,{ foreignKey:'phone'})
 User.hasOne(Admin,{foreignKey:'phone'})
+User.hasOne(HOD,{foreignKey:'phone'})
 
 module.exports = User;

@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database')
-const CourseModules = require('./CourseModules')
+const CourseModules = require('./CourseModules');
+const HOD = require('./HODS');
 
 const Course = db.define('courses',{
     name:{

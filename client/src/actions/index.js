@@ -24,7 +24,7 @@ const AsyncReloadUser = user =>{
 
 export const reloadUser = (role,user_name) =>{
     return dispatch =>{
-        Axios.get(`/api/v1/users?user_name=${user_name}&role=${role}`)
+        Axios.get(`/api/v1/users?user_name=${user_name[0]==='+'?`%2B${user_name.substr(1)}`:user_name}&role=${role}`)
         .then(res=>{
             dispatch(AsyncReloadUser(res.data))
         })

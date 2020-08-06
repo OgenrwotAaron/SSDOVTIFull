@@ -10,6 +10,7 @@ import LibraryBooksOutlinedIcon from '@material-ui/icons/LibraryBooksOutlined';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import SecurityIcon from '@material-ui/icons/Security';
+import HowToRegIcon from '@material-ui/icons/HowToReg';
 
 import { Profile, SidebarNav } from './components';
 
@@ -75,6 +76,11 @@ const Sidebar = props => {
         title: 'Admins',
         href: '/users/admins',
         icon: <SecurityIcon />
+      },
+      {
+        title: 'H.O.Ds',
+        href: '/users/hods',
+        icon: <HowToRegIcon />
       }
     )
   }

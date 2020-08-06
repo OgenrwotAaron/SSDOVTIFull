@@ -48,10 +48,12 @@ const UsersTable = props => {
   const [ students, setStudents ] = useState([]);
   const [ teachers, setTeachers] = useState([]);
   const [admins, setAdmins] = useState([]);
+  const [ hods, setHods] = useState([]);
   const [ courses, setCourses ] = useState({})
   const [ reloadStudent, setReloadStudent ] = useState(false)
   const [ reloadTeacher, setReloadTeacher ] = useState(false)
   const [reloadAdmin, setReloadAdmin] = useState(false);
+  const [reloadHods, setReloadHods] = useState(false);
 
   useEffect(()=>{
     axios.get('/api/v1/courses/available')
@@ -87,6 +89,14 @@ const UsersTable = props => {
     })
   }, [reloadAdmin]);
 
+  useEffect(() => {
+    axios.get('/api/v1/hods')
+    .then(res=>{
+      console.log(res.data)
+      setHods(res.data)
+    })
+  }, [reloadHods]);
+
   const handleAddStudent = (data) =>{
     return new Promise((resolve,reject)=>{
       axios.post('/api/v1/students/register',{...data})
@@ -118,6 +128,19 @@ const UsersTable = props => {
       axios.post('/api/v1/admins/register',{...data})
       .then(res=>{
         setReloadAdmin(!reloadAdmin)
+        resolve()
+      })
+      .catch(e=>{
+        reject()
+      })
+    })
+  }
+
+  const handleAddHod = data =>{
+    return new Promise((resolve,reject)=>{
+      axios.post('/api/v1/hods/register',{...data})
+      .then(res=>{
+        setReloadHods(!reloadHods)
         resolve()
       })
       .catch(e=>{
@@ -165,6 +188,19 @@ const UsersTable = props => {
     })
   }
 
+  const handleEditHod = data =>{
+    return new Promise((resolve,reject)=>{
+      axios.post('/api/v1/hods/edit',{...data})
+      .then(res=>{
+        setReloadHods(!reloadHods)
+        resolve()
+      })
+      .catch(e=>{
+        reject()
+      })
+    })
+  }
+
   const handleDeleteStudent = (data) =>{
     return new Promise((resolve,reject)=>{
       axios.delete(`/api/v1/students/delete?user_name=${data.reg_number}`)
@@ -196,6 +232,19 @@ const UsersTable = props => {
       axios.delete(`/api/v1/admins/delete?user_name=${data.phone}`)
       .then(res=>{
         setReloadAdmin(!reloadAdmin)
+        resolve()
+      })
+      .catch(e=>{
+        reject()
+      })
+    })
+  }
+
+  const handleDeleteHod = data =>{
+    return new Promise((resolve,reject)=>{
+      axios.delete(`/api/v1/hods/delete?user_name=${data.phone}`)
+      .then(res=>{
+        setReloadHods(!reloadHods)
         resolve()
       })
       .catch(e=>{
@@ -280,29 +329,51 @@ const UsersTable = props => {
                     }}
                   />
                 :
-                <MaterialTable
-                    title='Admins'
-                    icons={TableIcons}
-                    options={{
-                        pageSizeOptions:[5,10,20,50,100,150]
-                    }}
-                    columns={[
-                      {title:'First Name',field:'fname'},
-                      {title:'Last Name',field:'lname'},
-                      {title:'Email',field:'email'},
-                      {title:'Phone',field:'phone'},
-                      {
-                        title:'Position',
-                        field:'position'
-                      },
-                    ]}
-                    data={admins}
-                    editable={{
-                      onRowAdd:newData=>handleAddAdmin(newData),
-                      onRowDelete:oldData=>handleDeleteAdmin(oldData),
-                      onRowUpdate:newData=>handleEditAdmin(newData)
-                    }}
-                  />
+                  type === 'admins' ?
+                    <MaterialTable
+                        title='Admins'
+                        icons={TableIcons}
+                        options={{
+                            pageSizeOptions:[5,10,20,50,100,150]
+                        }}
+                        columns={[
+                          {title:'First Name',field:'fname'},
+                          {title:'Last Name',field:'lname'},
+                          {title:'Email',field:'email'},
+                          {title:'Phone',field:'phone'},
+                          {
+                            title:'Position',
+                            field:'position'
+                          },
+                        ]}
+                        data={admins}
+                        editable={{
+                          onRowAdd:newData=>handleAddAdmin(newData),
+                          onRowDelete:oldData=>handleDeleteAdmin(oldData),
+                          onRowUpdate:newData=>handleEditAdmin(newData)
+                        }}
+                      />
+                    :
+                    <MaterialTable
+                        title='Heads Of Department'
+                        icons={TableIcons}
+                        options={{
+                            pageSizeOptions:[5,10,20,50,100,150]
+                        }}
+                        columns={[
+                          {title:'First Name',field:'fname'},
+                          {title:'Last Name',field:'lname'},
+                          {title:'Email',field:'email'},
+                          {title:'Phone Number',field:'phone'},
+                          {title:'Course',field:'course_code',lookup:courses}
+                        ]}
+                        data={hods}
+                        editable={{
+                          onRowAdd:newData=>handleAddHod(newData),
+                          onRowDelete:oldData=>handleDeleteHod(oldData),
+                          onRowUpdate:newData=>handleEditHod(newData)
+                        }}
+                      />
             }
           </div>
         </PerfectScrollbar>

@@ -17,9 +17,9 @@ const Details = props => {
 
     const classes = useStyles()
 
-    const { description, modules, code, user } = props
+    const { description, modules, code, user, hod } = props
 
-    const [ value, setValue ]= useState(3)
+    const [ value, setValue ]= useState(2)
 
     const handleChange = (event,newValue) =>{
         setValue(newValue)
@@ -56,20 +56,26 @@ const Details = props => {
                     <Grid style={{paddingTop:'10px'}} container spacing={2}>
                         <Grid item xs={12} sm={4}>
                             <div className={classes.avatar}>
-                                <Avatar style={{height:'100px', width:'100px'}}>
-                                    <PersonIcon fontSize='large'/>
-                                </Avatar>
+                                {
+                                    hod.avatar ?
+                                        <Avatar src={hod.avatar} alt={hod.fname}/>
+                                    :
+                                        <Avatar style={{height:'100px', width:'100px'}}>
+                                            <PersonIcon fontSize='large'/>
+                                        </Avatar>
+                                }
+                                
                             </div>
                         </Grid>
                         <Grid item xs={12} sm={8}>
                             <Typography variant='h5'>
-                                First Last-
+                                {hod.fname} {hod.lname}-
                                 <Typography color='textSecondary' component='span'>
                                     Head of Department
                                 </Typography>
                             </Typography>
                             <Typography color='textSecondary' component='p'>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+                                {hod.description}
                             </Typography>
                         </Grid>
                     </Grid>

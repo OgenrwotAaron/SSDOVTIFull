@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -7,6 +8,8 @@ import {
   CardContent,
   Avatar,
   Typography,
+  CardActions,
+  Button
 } from '@material-ui/core';
 
 import PersonIcon from '@material-ui/icons/Person';
@@ -26,12 +29,49 @@ const useStyles = makeStyles(theme => ({
   progress: {
     marginTop: theme.spacing(2)
   },
+  uploadButton: {
+    marginRight: theme.spacing(2)
+  }
 }));
 
 const ProfileSummary = props => {
-  const { className, user, ...rest } = props;
+  const { className, user,reload, setReload, saveUser, ...rest } = props;
 
   const classes = useStyles();
+
+  const [widget, setWidget] = useState();
+
+  useEffect(() => {
+    setWidget(window.cloudinary.createUploadWidget({
+      cloudName:'aaron-ogenrwot',
+      uploadPreset:'ssdovti_videos',
+      folder:'ssdovti_images',
+    },(err,result)=>{
+        if(result && result.event==='success'){
+          axios.post('/api/v1/hods/edit',{...user,avatar:result.info.secure_url})
+          .then(res=> {
+            saveUser({...res.data.newHod,...res.data.user})
+            setReload(!reload)
+          } )
+          .catch(e=>setReload(!reload))
+        }
+    }))
+  }, [user,reload,setReload,saveUser]);
+
+  const handleUploadAvatar = event =>{
+    event.preventDefault()
+    widget.open()
+  }
+
+  const handleRemoveAvatar = event =>{
+    event.preventDefault()
+    axios.post('/api/v1/hods/edit',{...user,avatar:null})
+    .then(res=> {
+      saveUser({...res.data.newHod,...res.data.user})
+      setReload(!reload)
+    } )
+    .catch(e=>setReload(!reload))
+  }
 
   return (
     <Card
@@ -71,6 +111,17 @@ const ProfileSummary = props => {
             :null
           }
         </div>
+        <CardActions>
+          <Button
+            className={classes.uploadButton}
+            color="primary"
+            variant="text"
+            onClick={handleUploadAvatar}
+          >
+            Upload picture
+          </Button>
+          <Button onClick={handleRemoveAvatar} disabled={user.avatar ? false:true} variant="text">Remove picture</Button>
+        </CardActions>
       </CardContent>
     </Card>
   );

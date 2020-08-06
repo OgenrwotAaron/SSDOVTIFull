@@ -1,41 +1,38 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router()
-const passFather = require('passfather');
 
-const Users = require('../models/Users');
-const Teachers = require('../models/Teachers')
+const HOD = require('../models/HODS')
+const Users = require('../models/Users')
 
-//get all teachers
 router.get('/',(req,res)=>{
-    Teachers.findAll()
-    .then(teachers=>{
-        res.json(teachers)
+    HOD.findAll()
+    .then(hods=>{
+        res.json(hods)
     })
     .catch(e=>{
         res.json({error:true,message:e.parent.sqlMessage})
     })
 })
 
-//create a teacher
 router.post('/register',(req,res)=>{
-    const { fname, lname, email, phone, status, course_code } = req.body
+    const { fname, lname, email, phone, description, course_code } = req.body
 
     Users.create({
         user_name:phone,
         password:phone,
-        role:1
+        role:3
     })
     .then(user=>{
-        Teachers.create({
+        HOD.create({
             fname,
             lname,
             email,
             phone,
-            status,
+            description,
             course_code
         })
-        .then(teacher=>{
-            res.json(teacher)
+        .then(hod=>{
+            res.json(hod)
         })
         .catch(e=>{
             res.json({error:true,message:e.parent.sqlMessage})
@@ -43,15 +40,15 @@ router.post('/register',(req,res)=>{
     })
     .catch(e=>{
         if(e.parent.code === 'ER_DUP_ENTRY'){
-            Teachers.create({
+            HOD.create({
                 fname,
                 lname,
                 email,
                 phone,
-                status
+                description
             })
-            .then(teacher=>{
-                res.json(teacher)
+            .then(hod=>{
+                res.json(hod)
             })
             .catch(e=>{
                 res.json({error:true,message:e.parent.sqlMessage})
@@ -62,9 +59,8 @@ router.post('/register',(req,res)=>{
     })
 })
 
-//edit teacher details
 router.post('/edit',(req,res)=>{
-    const { email, fname, id, lname, phone, status, avatar} = req.body
+    const { email, fname, id, lname, phone, description, avatar} = req.body
 
     //use id to get user
     Users.findOne({
@@ -74,23 +70,23 @@ router.post('/edit',(req,res)=>{
     })
     .then(user=>{
         if(user){
-            Teachers.findOne({
+            HOD.findOne({
                 where:{
                     phone:user.user_name
                 }
             })
-            .then(teacher=>{
-                if(teacher.id === id){
-                    teacher.update({
+            .then(hod=>{
+                if(hod.id === id){
+                    hod.update({
                         fname,
                         lname,
                         phone,
-                        status,
+                        description,
                         email,
                         avatar
                     })
-                    .then(newTeacher=>{
-                        res.json(newTeacher)
+                    .then(newHod=>{
+                        res.json({newHod,user})
                     })
                     .catch(e=>{
                         res.status(500).json({error:true,message:e.parent.sqlMessage})
@@ -103,31 +99,31 @@ router.post('/edit',(req,res)=>{
                 res.status(500).json({error:true,message:e.parent.sqlMessage})
             })
         }else{
-            Teachers.findOne({
+            HOD.findOne({
                 where:{
                     id
                 }
             })
-            .then(teacher=>{
+            .then(hod=>{
                 Users.update({
                     user_name:phone,
                 },{
                     where:{
-                        user_name:teacher.phone
+                        user_name:hod.phone
                     }
                 })
                 .then(user=>{
                     if(user.length>0){
-                        teacher.update({
+                        hod.update({
                             fname,
                             lname,
                             phone,
-                            status,
+                            description,
                             email,
                             avatar
                         })
-                        .then(newTeacher=>{
-                            res.json(newTeacher)
+                        .then(newHod=>{
+                            res.json({newHod,user})
                         })
                         .catch(e=>{
                             res.status(500).json({error:true,message:e.parent.sqlMessage})
@@ -146,7 +142,6 @@ router.post('/edit',(req,res)=>{
     .catch(e=>{
         res.status(500).json({error:true,message:e.parent.sqlMessage})
     })
-
 })
 
 router.delete('/delete',(req,res)=>{

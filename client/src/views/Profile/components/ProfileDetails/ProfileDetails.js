@@ -55,7 +55,8 @@ const ProfileDetails = props => {
         newPass:user.password,
         user_name:user.user_name,
         rePass:'',
-        role:user.role
+        role:user.role,
+        description:user.description
       })
     }
   }, [user]);
@@ -74,7 +75,9 @@ const ProfileDetails = props => {
       phone:values.phone,
       password:values.rePass,
       user_name:values.user_name,
-      role:values.role
+      role:values.role,
+      oldPass:values.newPass,
+      description:values.description
     })
     .then(res=>{
       reloadUser(user.role,user.user_name)
@@ -199,6 +202,26 @@ const ProfileDetails = props => {
                 variant="outlined"
               />
             </Grid>
+            {
+              user.role === 3 &&
+              <Grid
+                item
+                xs={12}
+              >
+                <TextField
+                  fullWidth
+                  label="Biography"
+                  margin="dense"
+                  multiline
+                  rowsMax={4}
+                  rows={4}
+                  name="description"
+                  onChange={handleChange}
+                  value={values.description}
+                  variant="outlined"
+                />
+              </Grid>
+            }
             <Grid
               item
               md={6}

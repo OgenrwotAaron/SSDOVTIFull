@@ -18,6 +18,7 @@ const Course = props => {
     const classes = useStyles()
 
     const [course, setCourse] = useState({});
+    const [hod, setHod] = useState({});
 
     useEffect(() => {
         if(user.role===undefined){
@@ -27,7 +28,10 @@ const Course = props => {
                 history.push('/')
             }else{
                 axios.get(`/api/v1/courses/single?code=${props.match.params.id}`)
-                .then(res=>setCourse(res.data))
+                .then(res=>{
+                    setCourse(res.data.course)
+                    setHod(res.data.hod)
+                })
             }
         }
     }, [props.match.params.id,history,user.role,user.course_code]);
@@ -41,7 +45,7 @@ const Course = props => {
                         <Summary user={user} phases={course.phases} modules={course.courseModules} duration={course.duration}/>
                     </Grid>
                     <Grid item xs={12} sm={8}>
-                        <Details user={user} code={course.code} modules={course.courseModules} description={course.description}/>
+                        <Details hod={hod} user={user} code={course.code} modules={course.courseModules} description={course.description}/>
                     </Grid>
                 </Grid>
             </div>

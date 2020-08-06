@@ -7,11 +7,14 @@ const Students = require('../models/Students')
 const Teachers = require('../models/Teachers')
 const sequelize = require('sequelize')
 const Courses = require('../models/Courses')
-const Admin = require('../models/Admins')
+const Admin = require('../models/Admins');
+const HOD = require('../models/HODS');
 
 router.get('/',(req,res)=>{
 
     const { user_name, role } = req.query;
+
+    console.log(req.query)
 
     if(user_name){
         Users.findOne({
@@ -27,21 +30,32 @@ router.get('/',(req,res)=>{
                 },
                 {
                     model:Admin
+                },
+                {
+                    model:HOD
                 }
             ]
         })
         .then(user=>{
-            switch (role) {
-                case '0':
-                    res.json({user_name:user.user_name,password:user.password,role:user.role,...user.admin.dataValues})
-                    break;
-                case '1':
-                    res.json({user_name:user.user_name,password:user.password,role:user.role,...user.teacher.dataValues})
-                    break;
-                default:
-                    res.json({user_name:user.user_name,password:user.password,role:user.role,...user.student.dataValues})
-                    break;
+            if(user){
+                switch (role) {
+                    case '0':
+                        res.json({user_name:user.user_name,password:user.password,role:user.role,...user.admin.dataValues})
+                        break;
+                    case '1':
+                        res.json({user_name:user.user_name,password:user.password,role:user.role,...user.teacher.dataValues})
+                        break;
+                    case '3':
+                        res.json({user_name:user.user_name,password:user.password,role:user.role,...user.hod.dataValues})
+                        break;
+                    default:
+                        res.json({user_name:user.user_name,password:user.password,role:user.role,...user.student.dataValues})
+                        break;
+                }
+            }else{
+                res.status(404).send({error:true})
             }
+            
         })
         .catch(e=>{
             res.status(500).send(e)
@@ -102,7 +116,7 @@ router.get('/count',(req,res)=>{
 })
 
 router.post('/edit',(req,res)=>{
-    const { email, phone, password, user_name, role } = req.body;
+    const { email, phone, password, user_name, role, description } = req.body;
 
     if(password){
         Users.update({
@@ -128,6 +142,37 @@ router.post('/edit',(req,res)=>{
                 .catch(e=>{
                     res.status(500).send(e)
                 })
+            }else if(role===3){
+                HOD.update({
+                    email,
+                    phone,
+                    description
+                },{
+                    where:{
+                        phone:user_name
+                    }
+                })
+                .then(hod=>{
+                    res.json(hod)
+                })
+                .catch(e=>{
+                    res.status(500).send(e)
+                })
+            }else if(role===1){
+                Teachers.update({
+                    email,
+                    phone,
+                },{
+                    where:{
+                        phone:user_name
+                    }
+                })
+                .then(teacher=>{
+                    res.json(teacher)
+                })
+                .catch(e=>{
+                    res.status(500).send(e)
+                })
             }
         })
     }else{
@@ -142,6 +187,37 @@ router.post('/edit',(req,res)=>{
             })
             .then(student=>{
                 res.json(student)
+            })
+            .catch(e=>{
+                res.status(500).send(e)
+            })
+        }else if(role===3){
+            HOD.update({
+                email,
+                phone,
+                description
+            },{
+                where:{
+                    phone:user_name
+                }
+            })
+            .then(hod=>{
+                res.json(hod)
+            })
+            .catch(e=>{
+                res.status(500).send(e)
+            })
+        }else if(role===1){
+            Teachers.update({
+                email,
+                phone
+            },{
+                where:{
+                    phone:user_name
+                }
+            })
+            .then(teacher=>{
+                res.json(teacher)
             })
             .catch(e=>{
                 res.status(500).send(e)
@@ -170,6 +246,9 @@ router.post('/login',(req,res)=>{
             {
                 model:Admin,
             },
+            {
+                model:HOD
+            }
         ]
     })
     .then(user=>{
@@ -180,6 +259,9 @@ router.post('/login',(req,res)=>{
                     break;
                 case 1:
                     res.json({user_name:user.user_name,password:user.password,role:user.role,...user.teacher.dataValues})
+                    break;
+                case 3:
+                    res.json({user_name:user.user_name,password:user.password,role:user.role,...user.hod.dataValues})
                     break;
                 default:
                     res.json({user_name:user.user_name,password:user.password,role:user.role,...user.student.dataValues})

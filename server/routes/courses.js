@@ -3,7 +3,8 @@ const router = express.Router()
 
 const Courses = require('../models/Courses');
 const CourseModules = require('../models/CourseModules');
-const Unit = require('../models/Units')
+const Unit = require('../models/Units');
+const HOD = require('../models/HODS');
 
 router.get('/',(req,res)=>{
 
@@ -65,7 +66,14 @@ router.get('/single',(req,res)=>{
         ]
     })
     .then(course=>{
-        res.json(course)
+        HOD.findOne({
+            where:{
+                course_code:course.code
+            }
+        })
+        .then(hod=>{
+            res.json({course,hod})
+        })
     })
     .catch(e=>{
         res.json({error:true,message:e.parent.sqlMessage})
