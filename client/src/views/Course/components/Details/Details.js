@@ -19,7 +19,7 @@ const Details = props => {
 
     const { description, modules, code, user, hod } = props
 
-    const [ value, setValue ]= useState(2)
+    const [ value, setValue ]= useState(0)
 
     const handleChange = (event,newValue) =>{
         setValue(newValue)

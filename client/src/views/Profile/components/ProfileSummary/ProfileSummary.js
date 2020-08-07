@@ -31,6 +31,11 @@ const useStyles = makeStyles(theme => ({
   },
   uploadButton: {
     marginRight: theme.spacing(2)
+  },
+  images:{
+    width:theme.spacing(10),
+    height:theme.spacing(10),
+    marginLeft:theme.spacing(2)
   }
 }));
 
@@ -103,7 +108,7 @@ const ProfileSummary = props => {
             </Typography>
           </div>
           {
-            user ? user.avatar ? <Avatar alt={user.fname} src={user.avatar}/>
+            user ? user.avatar ? <Avatar className={classes.images} alt={user.fname} src={user.avatar}/>
             :
               <Avatar className={classes.avatar}>
                 <PersonIcon fontSize='large'/>

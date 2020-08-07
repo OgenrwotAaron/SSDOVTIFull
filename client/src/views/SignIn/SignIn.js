@@ -261,7 +261,7 @@ const SignIn = props => {
                   helperText={
                     hasError('email') ? formState.errors.email[0] : null
                   }
-                  label="Email address"
+                  label="Username"
                   name="email"
                   onChange={handleChange}
                   type="text"

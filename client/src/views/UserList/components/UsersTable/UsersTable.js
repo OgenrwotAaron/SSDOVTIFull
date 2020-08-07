@@ -92,7 +92,6 @@ const UsersTable = props => {
   useEffect(() => {
     axios.get('/api/v1/hods')
     .then(res=>{
-      console.log(res.data)
       setHods(res.data)
     })
   }, [reloadHods]);
