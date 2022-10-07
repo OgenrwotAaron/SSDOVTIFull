@@ -7,10 +7,10 @@
         "dialect": "mysql"
     },
     "production": {
-        "username": "bee98fd8c2e636",
-        "password": "4b52941f",
-        "database": "heroku_cc432fb06bc9fbe",
-        "host": "us-cdbr-east-06.cleardb.net",
+        "username": "dbq7dx7fumqxmqun",
+        "password": "n3qhng3ji9fmaggr",
+        "database": "lwh6vkiz0igoi70y",
+        "host": "au77784bkjx6ipju.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
         "dialect": "mysql"
     }
 }
