@@ -292,7 +292,7 @@ router.post("/login", (req, res) => {
     ],
   })
     .then((user) => {
-      console.log({ user });
+      console.log({ user_name: user.user_name, password: user.password });
       if (user) {
         switch (user.role) {
           case 0:
