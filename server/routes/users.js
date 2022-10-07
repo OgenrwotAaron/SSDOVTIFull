@@ -36,43 +36,42 @@ router.get("/", (req, res) => {
       ],
     })
       .then((user) => {
-        if (user) {
-          switch (role) {
-            case "0":
-              res.json({
-                user_name: user.user_name,
-                password: user.password,
-                role: user.role,
-                ...user.admin.dataValues,
-              });
-              break;
-            case "1":
-              res.json({
-                user_name: user.user_name,
-                password: user.password,
-                role: user.role,
-                ...user.teacher.dataValues,
-              });
-              break;
-            case "3":
-              res.json({
-                user_name: user.user_name,
-                password: user.password,
-                role: user.role,
-                ...user.hod.dataValues,
-              });
-              break;
-            default:
-              res.json({
-                user_name: user.user_name,
-                password: user.password,
-                role: user.role,
-                ...user.student.dataValues,
-              });
-              break;
-          }
-        } else {
+        if (!user) {
           res.status(404).send({ error: true });
+        }
+        switch (role) {
+          case "0":
+            res.json({
+              user_name: user.user_name,
+              password: user.password,
+              role: user.role,
+              ...user.admin.dataValues,
+            });
+            break;
+          case "1":
+            res.json({
+              user_name: user.user_name,
+              password: user.password,
+              role: user.role,
+              ...user.teacher.dataValues,
+            });
+            break;
+          case "3":
+            res.json({
+              user_name: user.user_name,
+              password: user.password,
+              role: user.role,
+              ...user.hod.dataValues,
+            });
+            break;
+          default:
+            res.json({
+              user_name: user.user_name,
+              password: user.password,
+              role: user.role,
+              ...user.student.dataValues,
+            });
+            break;
         }
       })
       .catch((e) => {
@@ -292,44 +291,44 @@ router.post("/login", (req, res) => {
     ],
   })
     .then((user) => {
-      console.log({ user_name: user.user_name, password: user.password });
-      if (user) {
-        switch (user.role) {
-          case 0:
-            res.json({
-              user_name: user.user_name,
-              password: user.password,
-              role: user.role,
-              ...user.admin.dataValues,
-            });
-            break;
-          case 1:
-            res.json({
-              user_name: user.user_name,
-              password: user.password,
-              role: user.role,
-              ...user.teacher.dataValues,
-            });
-            break;
-          case 3:
-            res.json({
-              user_name: user.user_name,
-              password: user.password,
-              role: user.role,
-              ...user.hod.dataValues,
-            });
-            break;
-          default:
-            res.json({
-              user_name: user.user_name,
-              password: user.password,
-              role: user.role,
-              ...user.student.dataValues,
-            });
-            break;
-        }
+      if (!user) {
+        res.status(404).send(user);
       }
-      res.status(404).send(user);
+
+      switch (user.role) {
+        case 0:
+          res.json({
+            user_name: user.user_name,
+            password: user.password,
+            role: user.role,
+            ...user.admin.dataValues,
+          });
+          break;
+        case 1:
+          res.json({
+            user_name: user.user_name,
+            password: user.password,
+            role: user.role,
+            ...user.teacher.dataValues,
+          });
+          break;
+        case 3:
+          res.json({
+            user_name: user.user_name,
+            password: user.password,
+            role: user.role,
+            ...user.hod.dataValues,
+          });
+          break;
+        default:
+          res.json({
+            user_name: user.user_name,
+            password: user.password,
+            role: user.role,
+            ...user.student.dataValues,
+          });
+          break;
+      }
     })
     .catch((e) => {
       res.status(404).send(e);
