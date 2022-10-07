@@ -22,5 +22,8 @@
     "mysql2": "^2.1.0",
     "passfather": "^2.0.0",
     "sequelize": "^6.3.3"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.5.1"
   }
 }

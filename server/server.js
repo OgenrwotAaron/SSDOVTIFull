@@ -8,8 +8,6 @@ const db = require("./config/database");
 //test db
 db.authenticate()
   .then((res) => console.log("Database connected"))
-  .then(() => db.sync({ force: true }))
-  .then(() => console.log("All models were synchronized successfully."))
   .catch((e) => console.log(e));
 
 const app = express();
